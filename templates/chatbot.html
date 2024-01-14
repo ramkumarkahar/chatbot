@@ -1,0 +1,701 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Caveat&family=Dosis&family=Libre+Baskerville&family=Merriweather:wght@300&display=swap");
+      
+    body {
+    font-family: "Libre Baskerville", serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #0a0a0a, #1e1e1f);
+    animation: neonBackground 2s linear infinite alternate;
+    transition: background-color 0.5s ease-in-out;
+  }
+  
+  @keyframes neonBackground {
+    from {
+      background-position: 0% 0%;
+    }
+    to {
+      background-position: 100% 0%;
+    }
+  }
+  
+          /* Global styles */
+          .messages-box {
+        max-height: 360px;
+        overflow-y: auto;
+      }
+  
+      /* Adjust styling for better appearance */
+      /* body {
+        font-family: "Libre Baskerville", serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #301478, #769dbc);
+        transition: background-color 0.5s ease-in-out;
+      } */
+  
+      .chat-container {
+        max-width: 400px;
+        margin: 50px auto;
+        border: 1px solid #fff3da;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-in-out;
+        height: 85vh;
+      }
+          body {
+            font-family: "Libre Baskerville", serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fbecb2;
+            transition: background-color 0.5s ease-in-out;
+          }
+          
+          .chat-container {
+            max-width: 400px;
+            margin: 50px auto;
+            border: 1px solid #fff3da;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            height: 85vh;
+            
+          }
+          
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(-20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          .chat-log {
+            padding: 15px;
+            max-height: 360px;
+            overflow-y: scroll;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 360px;
+          }
+          
+          .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f9f9f9;
+          }
+          
+          input {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+          }
+          
+          button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+          }
+          
+          button:hover {
+            background-color: orange;
+            transform: scale(1.1);
+          }
+          
+          .chat-log div {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            animation: slideIn 0.5s ease-in-out;
+          }
+          
+          @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateX(-20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          
+          /* .ninja {
+              margin: 10px;
+              padding: 10px;
+          } */
+          .chat-log div:nth-child(odd) {
+            text-align: right;
+            background-color: aquamarine;
+          }
+          
+          .chat-log div:nth-child(even) {
+            text-align: left;
+            background-color: aqua;
+          }
+          
+          /* Existing styles... */
+          
+          /* Add bounce animation to the Send button */
+          button {
+            /* Existing styles... */
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out,
+              box-shadow 0.3s ease-in-out;
+          }
+          
+          button:hover {
+            /* Existing styles... */
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          }
+          
+          /* Add a fade-in animation to the ninja icon */
+          .ninja {
+            /* Existing styles... */
+            animation: fadeIn 1s ease-in-out;
+          }
+          
+          /* Add a pulse animation to chat messages */
+          .chat-log div {
+            /* Existing styles... */
+            animation: pulse 1s infinite alternate;
+          }
+          
+          @keyframes pulse {
+            from {
+              transform: scale(1);
+              opacity: 1;
+            }
+            to {
+              transform: scale(1.1);
+              opacity: 0.8;
+            }
+          }
+          
+          /* Add a rotate animation to odd chat messages */
+          .chat-log div:nth-child(odd) {
+            /* Existing styles... */
+            animation: rotateIn 0.5s ease-in-out;
+          }
+          
+          @keyframes rotateIn {
+            from {
+              transform: rotate(-10deg);
+            }
+            to {
+              transform: rotate(0deg);
+            }
+          }
+          
+          /* Add a bounce animation to even chat messages */
+          .chat-log div:nth-child(even) {
+            /* Existing styles... */
+            animation: bounceIn 0.5s ease-in-out;
+          }
+          
+          @keyframes bounceIn {
+            from {
+              transform: translateY(-20px);
+            }
+            to {
+              transform: translateY(0);
+            }
+          }
+          
+          /* Add pulse animation to the Send button */
+          button {
+            /* Existing styles... */
+            animation: pulseButton 1s 1s;
+          }
+          
+          @keyframes pulseButton {
+            0%,
+            100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.1);
+            }
+          }
+          
+          /* Add shake animation to input on invalid message */
+          input:invalid {
+            animation: shake 0.5s ease-in-out;
+          }
+          
+          @keyframes shake {
+            0%,
+            100% {
+              transform: translateX(0);
+            }
+            25%,
+            75% {
+              transform: translateX(-5px);
+            }
+            50% {
+              transform: translateX(5px);
+            }
+          }
+          
+          .ninja {
+            margin: 10px;
+            padding: 10px;
+            animation: jump 1s infinite alternate;
+          }
+          
+          @keyframes jump {
+            from {
+              transform: translateY(0);
+            }
+            to {
+              transform: translateY(-10px);
+            }
+          }
+          
+          /* Add a gradient background to the body */
+          body {
+            /* Existing styles... */
+            background: linear-gradient(to right, #07071f, #505353);
+          }
+          
+          /* Add a subtle animation to the chat container */
+          .chat-container {
+            /* Existing styles... */
+            animation: bounce 1s ease-in-out;
+          }
+          
+          @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+              transform: translateY(0);
+            }
+            40% {
+              transform: translateY(-10px);
+            }
+            60% {
+              transform: translateY(-5px);
+            }
+          }
+          
+          /* Add a shadow to the chat input */
+          .chat-input {
+            /* Existing styles... */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+          
+          /* Add a border-radius to the chat log messages */
+          .chat-log div {
+            /* Existing styles... */
+            border-radius: 10px;
+          }
+          
+          /* Add a spin animation to the send button */
+          button {
+            /* Existing styles... */
+            animation: spin 0.5s ease-in-out;
+          }
+          
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          
+          .chat-input {
+            /* Existing styles... */
+            border-top: 1px solid #ddd;
+          }
+          
+          input:focus {
+            border-color: #3498db; /* Highlight input on focus */
+          }
+          /* Scrollbar styles */
+  .messages-box::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+  }
+  
+  .messages-box::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the scrollbar thumb */
+    border-radius: 4px; /* Add rounded corners to the scrollbar thumb */
+  }
+  
+  .messages-box::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* Set the color of the scrollbar track */
+  }
+  
+  .messages-box::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Change the color of the scrollbar thumb on hover */
+  }
+  .messages-box {
+     min-height: 360px;
+     max-width: 360px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* Add a fade-in animation to new messages */
+  .message {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Add a subtle animation to the chat log messages */
+  .chat-log div {
+    animation: pulse 1s infinite alternate;
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+  
+  /* Add a rotate animation to odd chat messages */
+  .chat-log div:nth-child(odd) {
+    animation: rotateIn 0.5s ease-in-out;
+  }
+  
+  @keyframes rotateIn {
+    from {
+      transform: rotate(-10deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+  
+  /* Add a bounce animation to even chat messages */
+  .chat-log div:nth-child(even) {
+    animation: bounceIn 0.5s ease-in-out;
+  }
+  
+  @keyframes bounceIn {
+    from {
+      transform: translateY(-20px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  /* Add background color to all messages */
+  .message {
+    background-color: #f0f0f0; /* Set your desired background color */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /* Set different colors for sent and received messages */
+  .message.sent {
+    background-color: #e6f7ff; /* Set your desired background color for sent messages */
+  }
+  
+  .message.received {
+    background-color: #d9f9b1; /* Set your desired background color for received messages */
+  }
+  
+  
+  
+  
+  
+  
+  .chat-container {
+    max-width: 400px;
+    margin: 50px auto;
+    border: 1px solid #fff3da;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out, neonBorder 1.5s linear infinite, rotateContainer 5s linear infinite;
+    height: 85vh;
+  }
+  
+  @keyframes neonBorder {
+    0% {
+      border-color: #fff3da;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    }
+    50% {
+      border-color: #f9069c; /* Change to a more vibrant color, e.g., magenta */
+      box-shadow: 0 0 20px rgba(500, 0, 500, 1.4); /* Change to a more vibrant color, e.g., magenta */
+    }
+    100% {
+      border-color: #fff3da;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* Existing styles... */
+  
+  /* Add responsiveness and adjust styles for smaller screens */
+  @media (max-width: 767px) and (min-width:300px){
+    .chat-container {
+      max-width: 100%;
+     min-height: 100%;
+     max-height: 100%;
+    }
+  body{
+    background-color: none;
+  }
+    .messages-box {
+    min-height: 500px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+    .message-form {
+      margin-top: 10px;
+    }
+  
+    /* Increase size of the message box for mobile */
+    .messages-box {
+      padding: 20px; /* Adjust the padding for better mobile experience */
+      border-radius: 8px;
+    }
+  
+    /* Add space between the message box and the input for mobile */
+    .message-form {
+      margin-top: 10px;
+    }
+  }
+  
+  /* Rest of your existing styles... */
+
+  
+  
+  /* Add auto-scroll and adjust size of the message box */
+  .messages-box {
+    min-height: 600px;
+    max-height: 76vh;
+    overflow-y: auto;
+  }
+  
+  .message-form {
+    margin-top: 10px;
+  }
+  
+  /* Increase size of the message box */
+  .messages-box {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  /* Add space between the message box and the input */
+  .message-form {
+    margin-top: 10px;
+  }
+  
+  
+  /* Rest of your existing styles... */
+  
+  
+  
+  
+  
+  /* Hide the scrollbar */
+  .messages-box::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  /* Add auto-scrolling */
+  .messages-box {
+    scroll-behavior: smooth;
+  }
+  
+  /* Ensure auto-scrolling works in Firefox */
+  .messages-box {
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+  </style>
+  {% endblock %}
+  
+  
+  {% block content %}
+  <div class="chat-container">
+    <div class="card flex-grow-1">
+      
+      <div class="card-body messages-box">
+        
+        <ul class="list-unstyled messages-list">
+          
+  
+          {% for chat in chats %}
+            {% if chat.user == request.user %}
+  
+              <li class="message sent">
+            <div class="message-text">
+              <div class="message-sender">
+                <b>You</b>
+              </div>
+              <div class="message-content">
+                {{chat.message}}
+              </div>
+            </div>
+          </li>
+  
+          <li class="message received">
+            <div class="message-text">
+              <div class="message-sender">
+                <b>HelpBot</b>
+              </div>
+              <div class="message-content">
+                {{chat.response}}
+              </div>
+            </div>
+          </li>
+  
+            {% endif %}
+          {% endfor %}
+          
+        </ul>
+        
+      </div>
+      <br><br>
+      <br><br>
+      <br><br>
+    </div>
+    <form class="message-form">
+      {%csrf_token%}
+      <div class="input-group">
+        <input type="text" class="form-control message-input" placeholder="Type your message...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary btn-send">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+        const messagesList = document.querySelector('.messages-list');
+        const messageForm = document.querySelector('.message-form');
+        const messageInput = document.querySelector('.message-input');
+    
+        messageForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+    
+            const message = messageInput.value.trim();
+            if (message.length === 0) {
+                return;
+            }
+    
+            // Create a new sent message item
+            const messageItem = document.createElement('li');
+            messageItem.classList.add('message', 'sent');
+            messageItem.innerHTML = `
+                <div class="message-text">
+                    <div class="message-sender">
+                        <b>You</b>
+                    </div>
+                    <div class="message-content">
+                        ${message}
+                    </div>
+                </div>`;
+            messagesList.appendChild(messageItem);
+    
+            // Scroll to the bottom after adding a new sent message
+            messageItem.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    
+            messageInput.value = '';
+
+            fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+              'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+              'message': message
+            })
+          })
+
+    
+            // Simucdlate a server response (replace with your actual fetch)
+            
+    
+            .then(response => response.json())
+            .then(data => {
+              const response = data.response;
+              const messageItem = document.createElement('li');
+              messageItem.classList.add('message', 'received');
+              messageItem.innerHTML = ` 
+                <div class="message-text">
+                    <div class="message-sender">
+                        <b>HelpBot</b>
+                    </div>
+                    <div class="message-content">
+                        ${response}
+                    </div>
+                </div>
+            `;
+            messagesList.appendChild(messageItem);
+              });
+            // Scroll to the bottom after adding a new received message
+            messageItem.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        });
+  
+  </script>
+
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  {% endblock %}
